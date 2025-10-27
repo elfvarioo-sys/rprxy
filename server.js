@@ -9,7 +9,7 @@ var blocked = require('./static/blocked.json');
 var reBlocked = require('./static/re_blocked.json');
 
 var port = process.env.PORT || 80;
-var subdomainsAsPath = false;
+var subdomainsAsPath = true;
 var serveHomepage = true;
 var serveHomepageOnAllSubdomains = false;
 
