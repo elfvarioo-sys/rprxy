@@ -39,16 +39,42 @@ function stripSub (link) {
   return [path || '/', sub];
 }
 
-function getSubdomain(req, rewrite) {
-    if (!subdomainsAsPath) return null;
+function getSubdomain(req, rewrite = false) {
+    let sub = '';
 
-    // Split first path segment
-    var split = req.url.split('/');
-    var sub = split[1] ? split[1] + '.' : '';
-    if (rewrite) split.splice(1, 1);
-    req.url = split.join('/') || '/';
+    if (subdomainsAsPath) {
+        // Treat first path segment as subdomain
+        const segments = req.url.split('/').filter(Boolean); // ["blog", "posts"]
+        if (segments.length > 0) {
+            sub = segments[0] + '.';
+            if (rewrite) {
+                // Remove the subdomain from the URL
+                segments.shift();
+                req.url = '/' + segments.join('/');
+            }
+        }
+    } else if (req.headers && req.headers.host) {
+        // Extract subdomain from host (e.g., blog.example.com → blog.)
+        const hostParts = req.headers.host.split('.');
+        if (hostParts.length > 2) {
+            sub = hostParts.slice(0, hostParts.length - 2).join('.') + '.';
+        }
+    }
+
     return sub;
 }
+
+
+// function getSubdomain(req, rewrite) {
+//     if (!subdomainsAsPath) return null;
+
+//     // Split first path segment
+//     var split = req.url.split('/');
+//     var sub = split[1] ? split[1] + '.' : '';
+//     if (rewrite) split.splice(1, 1);
+//     req.url = split.join('/') || '/';
+//     return sub;
+// }
 
 // function getSubdomain (req, rewrite) {
 //   var sub;
