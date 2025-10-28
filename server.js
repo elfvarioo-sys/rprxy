@@ -39,16 +39,16 @@ function stripSub (link) {
   return [path || '/', sub];
 }
 
-// function getSubdomain(req, rewrite) {
-//     if (!subdomainsAsPath) return null;
+function getSubdomain(req, rewrite) {
+    if (!subdomainsAsPath) return null;
 
-//     // Split first path segment
-//     var split = req.url.split('/');
-//     var sub = split[1] ? split[1] + '.' : '';
-//     if (rewrite) split.splice(1, 1);
-//     req.url = split.join('/') || '/';
-//     return sub;
-// }
+    // Split first path segment
+    var split = req.url.split('/');
+    var sub = split[1] ? split[1] + '.' : '';
+    if (rewrite) split.splice(1, 1);
+    req.url = split.join('/') || '/';
+    return sub;
+}
 
 function getSubdomain (req, rewrite) {
   var sub;
