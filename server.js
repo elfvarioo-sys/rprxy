@@ -50,20 +50,20 @@ function getSubdomain(req, rewrite) {
     return sub;
 }
 
-function getSubdomain (req, rewrite) {
-  var sub;
-  if (subdomainsAsPath) {
-    var res = stripSub(req.url);
-    if (rewrite) {
-      req.url = res[0];
-    }
-    sub = res[1];
-  } else {
-    var domain = req.headers.host;
-    sub = domain.slice(0, domain.lastIndexOf('.', domain.lastIndexOf('.') - 1) + 1);
-  }
-  return sub;
-}
+// function getSubdomain (req, rewrite) {
+//   var sub;
+//   if (subdomainsAsPath) {
+//     var res = stripSub(req.url);
+//     if (rewrite) {
+//       req.url = res[0];
+//     }
+//     sub = res[1];
+//   } else {
+//     var domain = req.headers.host;
+//     sub = domain.slice(0, domain.lastIndexOf('.', domain.lastIndexOf('.') - 1) + 1);
+//   }
+//   return sub;
+// }
 
 function onProxyError (err, req, res) {
   console.error(err);
